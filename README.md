@@ -1,5 +1,13 @@
 # ChooseOptimizer
 
+[![Build Status](https://travis-ci.org/scheinerman/ChooseOptimizer.jl.svg?branch=master)](https://travis-ci.
+org/scheinerman/ChooseOptimizer.jl)
+
+[![codecov.io](http://codecov.io/github/scheinerman/ChooseOptimizer.jl/coverage.svg?branch=master)](http://c
+odecov.io/github/scheinerman/ChooseOptimizer.jl?branch=master)
+
+
+
 This module is a tool to select different optimization engines.
 
 Many of my modules rely on integer linear programming and use `JuMP`
