@@ -7,7 +7,7 @@ Many of my modules rely on integer linear programming and use `JuMP`
 and the like to solve the IPLs. This module makes switching between
 different optimization engines easier.
 
-## Selecting and using an optimizer
+## Selecting and using a solver
 
 The `set_solver` function is used to select the optimization package
 desired. Without any arguments it selects the `Cbc` optimizer. Otherwise,
@@ -25,6 +25,16 @@ instead we do this:
 MOD = Model(get_solver())
 ```
 
-## Selecting and using optimizer options
+## Selecting and using solver options
 
-Forthcoming!
+Solver options can be set up using these functions:
+
+* `set_solver_option(kwd, val)` adds the option whose name is
+given by the symbol `kwd` to be the value `val`. To add several
+options, use this several times.
+* `clear_solver_options()` erases all solver options.
+* `get_solver_options()` returns a dictionary of the options that
+are currently set.
+
+When a `JuMP` model is created using `Model(get_solver())` the
+options are passed along.
