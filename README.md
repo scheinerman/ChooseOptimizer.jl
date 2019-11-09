@@ -4,7 +4,7 @@
 This module is a tool to select different optimization engines.
 
 Many of my modules rely on integer linear programming and use `JuMP`
-and the like to solve the IPLs. This module makes switching between
+and the like to solve the ILPs. This module makes switching between
 different optimization engines easier.
 
 ## Selecting and using a solver
