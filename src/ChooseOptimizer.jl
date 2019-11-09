@@ -12,13 +12,11 @@ end
 
 function get_solver()
     global SOLVER
-    return JuMP.with_solver(SOLVER.Optimizer)
+    return JuMP.with_optimizer(SOLVER.Optimizer)
 end
 
 
 # function set_solver_options(opts)
 # function get_solver_options()
-
-
 
 end
