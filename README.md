@@ -9,20 +9,20 @@ different optimization engines easier.
 
 ## Selecting and using an optimizer
 
-The `set_optimizer` function is used to select the optimization package
+The `set_solver` function is used to select the optimization package
 desired. Without any arguments it selects the `Cbc` optimizer. Otherwise,
-`set_optimizer(NAME)` is used to choose the desired optimizer, e.g.,
-`set_optimizer(Gurobi)`. (For this to work, this must follow
+`set_solver(NAME)` is used to choose the desired optimizer, e.g.,
+`set_solver(Gurobi)`. (For this to work, this must follow
   `using Gurboi`.)
 
-The function `get_optimizer` is a replacement for `JuMP`'s
-`with_optimizer` function. Instead of this:
+The function `get_solver` is a replacement for `JuMP`'s
+`with_solver` function. Instead of this:
 ```
-MOD = Model(with_optimizer(Cbc.Optimizer))
+MOD = Model(with_solver(Cbc.Optimizer))
 ```
 instead we do this:
 ```
-MOD = Model(get_optimizer())
+MOD = Model(get_solver())
 ```
 
 ## Selecting and using optimizer options
