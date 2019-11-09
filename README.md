@@ -1,2 +1,3 @@
-# ChooseOptimizer.jl
-Tool to select different optimization engines
+# ChooseOptimizer
+
+This is a tool to select different optimization engines.
