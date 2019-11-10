@@ -6,8 +6,9 @@ export set_solver, get_solver
 export set_solver_options, clear_solver_options, get_solver_options
 export set_solver_verbose
 
-SOLVER = Cbc
-SOLVER_OPTS = Dict()
+_SOLVER = Cbc
+_SOLVER_OPTS = Dict()
+
 
 """
 `set_solver(OPT_NAME::Module=Cbc)` sets the optimization solver to be used.
@@ -15,7 +16,7 @@ Note: This automatically invokes `clear_solver_options()`.
 """
 function set_solver(OPT_NAME::Module=Cbc)
     clear_solver_options()
-    global SOLVER = OPT_NAME
+    global _SOLVER = OPT_NAME
 end
 
 """
@@ -25,7 +26,7 @@ by the solver.
 `set_solver_options(d::Dict)` adds all the options in `d`.
 """
 function set_solver_options(kwd::Symbol, val)
-    global SOLVER_OPTS[kwd] = val
+    global _SOLVER_OPTS[kwd] = val
 end
 
 function set_solver_options(d::Dict)
@@ -39,7 +40,7 @@ end
 `clear_solver_options()` clears all solver options.
 """
 function clear_solver_options()
-    global SOLVER_OPTS = Dict()
+    global _SOLVER_OPTS = Dict()
     nothing
 end
 
@@ -47,8 +48,8 @@ end
 `get_solver_options()` returns the dictionary of current solver options.
 """
 function get_solver_options()::Dict
-    global SOLVER_OPTS
-    return SOLVER_OPTS
+    global _SOLVER_OPTS
+    return _SOLVER_OPTS
 end
 
 """
@@ -56,9 +57,9 @@ end
 `Model`. That is, one just uses `Model(get_solver())`.
 """
 function get_solver()
-    global SOLVER
-    global SOLVER_OPTS
-    return JuMP.with_optimizer(SOLVER.Optimizer; get_solver_options()...)
+    global _SOLVER
+    global _SOLVER_OPTS
+    return JuMP.with_optimizer(_SOLVER.Optimizer; get_solver_options()...)
 end
 
 """
@@ -66,30 +67,30 @@ end
 during its work.
 """
 function set_solver_verbose(verb::Bool = true)
-    global SOLVER
+    global _SOLVER
     val = verb ? 1 : 0
     key = :Unknown
     try
-        if SOLVER == Cbc
+        if _SOLVER == Cbc
             key = :LogLevel
         end
     catch
     end
     try
-        if SOLVER == Main.Cbc
+        if _SOLVER == Main.Cbc
             key = :LogLevel
         end
     catch
     end
     try
-        if SOLVER == Main.Gurobi
+        if _SOLVER == Main.Gurobi
             key = :OutputFlag
         end
     catch
     end
 
     if key == :Unknown
-        warn("Unable to set verbose option for $SOLVER")
+        warn("Unable to set verbose option for $_SOLVER")
     else
         set_solver_options(key,val)
     end
