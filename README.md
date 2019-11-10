@@ -29,12 +29,27 @@ MOD = Model(get_solver())
 
 Solver options can be set up using these functions:
 
-* `set_solver_option(kwd, val)` adds the option whose name is
+* `set_solver_options(kwd, val)` adds the option whose name is
 given by the symbol `kwd` to be the value `val`. To add several
 options, use this several times.
+* `set_solver_options(d::Dict)` adds all the key/value entries
+in `d` as options by repeated calls to `set_solver_options(key,value)`.
 * `clear_solver_options()` erases all solver options.
 * `get_solver_options()` returns a dictionary of the options that
 are currently set.
 
 When a `JuMP` model is created using `Model(get_solver())` the
 options are passed along.
+
+Note that each call to `get_solver` clears all options.
+
+#### Verbose output
+
+The `set_solver_verbose()` function can be used to tell the solver to
+be verbose in its operation. Alternatively, `set_solver_verbose(false)`
+suppresses output.
+
+The action of `set_solver_verbose` is through `set_solver_options`.
+
+At present, this function only knows how to do this for the `Cbc` and
+`Gurobi` optimizers.
