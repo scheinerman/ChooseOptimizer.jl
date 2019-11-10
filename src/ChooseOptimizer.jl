@@ -76,12 +76,14 @@ function set_solver_verbose(verb::Bool = true)
         end
     catch
     end
+
     try
         if _SOLVER == Main.Cbc
             key = :LogLevel
         end
     catch
     end
+
     try
         if _SOLVER == Main.Gurobi
             key = :OutputFlag
@@ -89,8 +91,16 @@ function set_solver_verbose(verb::Bool = true)
     catch
     end
 
+    try
+        if _SOLVER == Main.GLPK
+            key = :msg_lev
+            val = verb ? 2 : 0 # GLPK uses 2 for "normal" messaging
+        end
+    catch
+    end
+
     if key == :Unknown
-        warn("Unable to set verbose option for $_SOLVER")
+        @warn("Unable to set verbose option for $_SOLVER")
     else
         set_solver_options(key,val)
     end
