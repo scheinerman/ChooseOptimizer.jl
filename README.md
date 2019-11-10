@@ -20,7 +20,7 @@ The function `get_solver` is a replacement for `JuMP`'s
 ```
 MOD = Model(with_solver(Cbc.Optimizer))
 ```
-instead we do this:
+we do this:
 ```
 MOD = Model(get_solver())
 ```
