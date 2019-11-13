@@ -2,7 +2,7 @@ module ChooseOptimizer
 
 using Cbc, JuMP
 
-export set_solver, get_solver
+export set_solver, get_solver, get_solver_name
 export set_solver_options, clear_solver_options, get_solver_options
 export set_solver_verbose
 
@@ -17,6 +17,8 @@ Note: This automatically invokes `clear_solver_options()`.
 function set_solver(OPT_NAME::Module=Cbc)
     clear_solver_options()
     global _SOLVER = OPT_NAME
+    @info "Solver set to $_SOLVER"
+    nothing
 end
 
 """
@@ -62,6 +64,11 @@ function get_solver()
     return JuMP.with_optimizer(_SOLVER.Optimizer; get_solver_options()...)
 end
 
+function get_solver_name()
+    global _SOLVER
+    return _SOLVER
+end
+
 """
 `set_solver_verbose(verb = true)` sets how verbose the solver is
 during its work.
@@ -70,6 +77,7 @@ function set_solver_verbose(verb::Bool = true)
     global _SOLVER
     val = verb ? 1 : 0
     key = :Unknown
+    @info "Setting verbose option for $_SOLVER to $verb"
     try
         if _SOLVER == Cbc
             key = :LogLevel
@@ -85,8 +93,23 @@ function set_solver_verbose(verb::Bool = true)
     end
 
     try
+        if _SOLVER == Gurobi
+            key = :OutputFlag
+        end
+    catch
+    end
+
+    try
         if _SOLVER == Main.Gurobi
             key = :OutputFlag
+        end
+    catch
+    end
+
+    try
+        if _SOLVER == GLPK
+            key = :msg_lev
+            val = verb ? 2 : 0 # GLPK uses 2 for "normal" messaging
         end
     catch
     end
