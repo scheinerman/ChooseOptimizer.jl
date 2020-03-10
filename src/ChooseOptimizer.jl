@@ -7,7 +7,7 @@ export set_solver_options, clear_solver_options, get_solver_options
 export set_solver_verbose
 
 _SOLVER = Cbc
-_SOLVER_OPTS = Dict()
+_SOLVER_OPTS = Dict{String,Any}()
 
 
 """
@@ -27,7 +27,7 @@ by the solver.
 
 `set_solver_options(d::Dict)` adds all the options in `d`.
 """
-function set_solver_options(kwd::Symbol, val)
+function set_solver_options(kwd::String, val)
     global _SOLVER_OPTS[kwd] = val
 end
 
@@ -61,7 +61,11 @@ end
 function get_solver()
     global _SOLVER
     global _SOLVER_OPTS
-    return JuMP.with_optimizer(_SOLVER.Optimizer; get_solver_options()...)
+
+    d = get_solver_options()
+    return JuMP.optimizer_with_attributes(_SOLVER.Optimizer, d...)
+
+    # return JuMP.with_optimizer(_SOLVER.Optimizer; get_solver_options()...)
 end
 
 function get_solver_name()
@@ -76,39 +80,39 @@ during its work.
 function set_solver_verbose(verb::Bool = true)
     global _SOLVER
     val = verb ? 1 : 0
-    key = :Unknown
+    key = "Unknown"
     @info "Setting verbose option for $_SOLVER to $verb"
     try
         if _SOLVER == Cbc
-            key = :LogLevel
+            key = "LogLevel"
         end
     catch
     end
 
     try
         if _SOLVER == Main.Cbc
-            key = :LogLevel
+            key = "LogLevel"
         end
     catch
     end
 
     try
         if _SOLVER == Gurobi
-            key = :OutputFlag
+            key = "OutputFlag"
         end
     catch
     end
 
     try
         if _SOLVER == Main.Gurobi
-            key = :OutputFlag
+            key = "OutputFlag"
         end
     catch
     end
 
     try
         if _SOLVER == GLPK
-            key = :msg_lev
+            key = "msg_lev"
             val = verb ? 2 : 0 # GLPK uses 2 for "normal" messaging
         end
     catch
@@ -116,13 +120,13 @@ function set_solver_verbose(verb::Bool = true)
 
     try
         if _SOLVER == Main.GLPK
-            key = :msg_lev
+            key = "msg_lev"
             val = verb ? 2 : 0 # GLPK uses 2 for "normal" messaging
         end
     catch
     end
 
-    if key == :Unknown
+    if key == "Unknown"
         @warn("Unable to set verbose option for $_SOLVER")
     else
         set_solver_options(key,val)
