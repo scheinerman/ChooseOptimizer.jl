@@ -42,7 +42,7 @@ end
 `clear_solver_options()` clears all solver options.
 """
 function clear_solver_options()
-    global _SOLVER_OPTS = Dict()
+    global _SOLVER_OPTS = Dict{String,Any}()
     nothing
 end
 
