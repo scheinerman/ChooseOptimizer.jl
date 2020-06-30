@@ -1,3 +1,3 @@
-using Test
+using Test, ChooseOptimizer, Cbc
 
-@test true
+@test get_solver_name() == Cbc
