@@ -1,5 +1,7 @@
 # ChooseOptimizer
 
+[![Build Status](https://travis-ci.com/scheinerman/ChooseOptimizer.jl.svg?branch=master)](https://travis-ci.com/scheinerman/ChooseOptimizer.jl)
+
 
 This module is a tool to select different optimization engines.
 
