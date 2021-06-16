@@ -14,10 +14,10 @@ _SOLVER_OPTS = Dict{String,Any}()
 `set_solver(OPT_NAME::Module=Cbc)` sets the optimization solver to be used.
 Note: This automatically invokes `clear_solver_options()`.
 """
-function set_solver(OPT_NAME::Module=Cbc)
+function set_solver(OPT_NAME::Module = Cbc)
     clear_solver_options()
     global _SOLVER = OPT_NAME
-    @info "Solver set to $_SOLVER"
+    # @info "Solver set to $_SOLVER"
     nothing
 end
 
@@ -33,7 +33,7 @@ end
 
 function set_solver_options(d::Dict)
     for k in keys(d)
-        set_solver_options(k,d[k])
+        set_solver_options(k, d[k])
     end
     nothing
 end
@@ -81,7 +81,7 @@ function set_solver_verbose(verb::Bool = true)
     global _SOLVER
     val = verb ? 1 : 0
     key = "Unknown"
-    @info "Setting verbose option for $_SOLVER to $verb"
+    # @info "Setting verbose option for $_SOLVER to $verb"
     try
         if _SOLVER == Cbc
             key = "LogLevel"
@@ -129,7 +129,7 @@ function set_solver_verbose(verb::Bool = true)
     if key == "Unknown"
         @warn("Unable to set verbose option for $_SOLVER")
     else
-        set_solver_options(key,val)
+        set_solver_options(key, val)
     end
     nothing
 end
