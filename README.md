@@ -1,7 +1,5 @@
 # ChooseOptimizer
 
-[![Build Status](https://travis-ci.com/scheinerman/ChooseOptimizer.jl.svg?branch=master)](https://travis-ci.com/scheinerman/ChooseOptimizer.jl)
-
 
 This module is a tool to select different optimization engines.
 
@@ -53,5 +51,5 @@ suppresses output.
 
 The action of `set_solver_verbose` is through `set_solver_options`.
 
-At present, this function only knows how to do this for the `Cbc`, `GLPK`, and
-`Gurobi` optimizers.
+At present, this function only knows how to do this for the `Cbc`, `GLPK`,
+`Gurobi`, and `HiGHS` optimizers.

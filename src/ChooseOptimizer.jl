@@ -126,6 +126,24 @@ function set_solver_verbose(verb::Bool = true)
     catch
     end
 
+    try
+        if _SOLVER == HiGHS
+            key = "output_flag"
+            val = verb
+        end
+    catch
+    end
+
+    try
+        if _SOLVER == Main.HiGHS
+            key = "output_flag"
+            val = verb
+        end
+    catch
+    end
+
+
+
     if key == "Unknown"
         @warn("Unable to set verbose option for $_SOLVER")
     else
