@@ -1,6 +1,6 @@
 """
 The `_solver_table` maps solver Modules as Symbols (e.g., `:Cbc`) to 
-a pair `(name, verbose, quite)` values.
+a pair `(name, verbose, quiet)` values.
 """
 _solver_table = Dict{String,Tuple{String,Any,Any}}()
 
@@ -8,6 +8,7 @@ _solver_table["Cbc"] = ("LogLevel", 1, 0)
 _solver_table["Gurobi"] = ("OutputFlag", 1, 0)
 _solver_table["GLPK"] = ("msg_lev", 2, 0)
 _solver_table["HiGHS"] = ("output_flag", true, false)
+_solver_table["CPLEX"] = ("CPXPARAM_ScreenOutput", 1, 0)
 
 
 """
