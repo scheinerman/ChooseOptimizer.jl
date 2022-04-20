@@ -20,6 +20,7 @@ MOD = Model(with_solver(Cbc.Optimizer))
 ```
 we do this:
 ```julia
+set_solver(Cbc)
 MOD = Model(get_solver())
 ```
 
