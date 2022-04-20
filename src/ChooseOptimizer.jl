@@ -64,8 +64,6 @@ function get_solver()
 
     d = get_solver_options()
     return JuMP.optimizer_with_attributes(_SOLVER.Optimizer, d...)
-
-    # return JuMP.with_optimizer(_SOLVER.Optimizer; get_solver_options()...)
 end
 
 function get_solver_name()

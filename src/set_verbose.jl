@@ -1,6 +1,6 @@
 """
 The `_solver_table` maps solver Modules as Symbols (e.g., `:Cbc`) to 
-a pair `(name, verbose, quiet)` values.
+a tuple of `(name, verbose, quiet)` values.
 """
 _solver_table = Dict{String,Tuple{String,Any,Any}}()
 

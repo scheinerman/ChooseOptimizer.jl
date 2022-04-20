@@ -1,11 +1,9 @@
 # ChooseOptimizer
 
 
-This module is a tool to select different optimization engines.
+This module is a tool to select different optimization engines when using `JuMP`
+and to change solver options.
 
-Many of my modules rely on integer linear programming and use `JuMP`
-and the like to solve the ILPs. This module makes switching between
-different optimization engines easier.
 
 ## Selecting and using a solver
 
@@ -17,11 +15,11 @@ desired. Without any arguments it selects the `Cbc` optimizer. Otherwise,
 
 The function `get_solver` is a replacement for `JuMP`'s
 `with_solver` function. Instead of this:
-```
+```julia
 MOD = Model(with_solver(Cbc.Optimizer))
 ```
 we do this:
-```
+```julia
 MOD = Model(get_solver())
 ```
 
@@ -41,9 +39,9 @@ are currently set.
 When a `JuMP` model is created using `Model(get_solver())` the
 options are passed along.
 
-Note that each call to `get_solver` clears all options.
+Note that each call to `set_solver` clears all options.
 
-#### Verbose output
+## Verbose output
 
 The `set_solver_verbose()` function can be used to tell the solver to
 be verbose in its operation. Alternatively, `set_solver_verbose(false)`
@@ -51,5 +49,15 @@ suppresses output.
 
 The action of `set_solver_verbose` is through `set_solver_options`.
 
-At present, this function only knows how to do this for the `Cbc`, `GLPK`,
-`Gurobi`, `HiGHS` and `CPLEX` optimizers.
+At present, this function only knows how to do this for the `Cbc`, `CPLEX`, `GLPK`,
+`Gurobi`, and `HiGHS` optimizers. It is easy, however, to add additional
+solvers by modifying the file `set_verbose.jl` or in the REPL with a command
+that looks like this:
+```julia
+ChooseOptimizer._solver_table["NAME"] = ("opt_name", yes_val, no_val)
+```
+where 
++ `NAME` is the name of the solver, 
++ `opt_name` is the option name that controls output for that solver, 
++ `yes_val` is the value for verbose output, and
++ `no_val` is the value for supressing output.
