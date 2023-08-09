@@ -27,6 +27,7 @@ function set_solver_verbose(verb::Bool = true)
     (opt, verbose, quiet) = _solver_table[the_solver]
 
     set_solver_options(opt, verb ? verbose : quiet)
-    @info "Solver $_SOLVER verbose is set to $verb"
+    return verb
+    # @info "Solver $_SOLVER verbose is set to $verb"
 end
 
