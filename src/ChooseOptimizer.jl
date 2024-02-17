@@ -1,20 +1,22 @@
 module ChooseOptimizer
 
-using Cbc, JuMP
+using GLPK, JuMP
 
 export set_solver, get_solver, get_solver_name
 export set_solver_options, clear_solver_options, get_solver_options
 export set_solver_verbose
 
-_SOLVER = Cbc
+_SOLVER = GLPK
 _SOLVER_OPTS = Dict{String,Any}()
 
 
 """
-`set_solver(OPT_NAME::Module=Cbc)` sets the optimization solver to be used.
+    set_solver(OPT_NAME::Module = GLPK)
+
+sets the optimization solver to be used.
 Note: This automatically invokes `clear_solver_options()`.
 """
-function set_solver(OPT_NAME::Module = Cbc)
+function set_solver(OPT_NAME::Module = GLPK)
     clear_solver_options()
     global _SOLVER = OPT_NAME
     # @info "Solver set to $_SOLVER"

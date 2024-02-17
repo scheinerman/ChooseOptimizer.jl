@@ -1,6 +1,6 @@
-using Test, ChooseOptimizer, Cbc
+using Test, ChooseOptimizer, GLPK
 
-@test get_solver_name() == Cbc
+@test get_solver_name() == GLPK
 set_solver_verbose(false)
 d = get_solver_options()
-@test d["LogLevel"] == 0
+@test d["msg_lev"] == 0

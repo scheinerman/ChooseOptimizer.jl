@@ -8,7 +8,7 @@ and to change solver options.
 ## Selecting and using a solver
 
 The `set_solver` function is used to select the optimization package
-desired. Without any arguments it selects the `Cbc` optimizer. Otherwise,
+desired. Without any arguments it selects the `GLPK` optimizer. Otherwise,
 `set_solver(NAME)` is used to choose the desired optimizer, e.g.,
 `set_solver(Gurobi)`. (For this to work, this must follow
   `using Gurboi`.)
