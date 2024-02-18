@@ -10,19 +10,31 @@ and to change solver options.
 The `set_solver` function is used to select the optimization package
 desired. Without any arguments it selects the `GLPK` optimizer. Otherwise,
 `set_solver(NAME)` is used to choose the desired optimizer, e.g.,
-`set_solver(Gurobi)`. (For this to work, this must follow
-  `using Gurboi`.)
+`set_solver(Gurobi)`. (For this to work, this must follow `using Gurboi`.)
 
 The function `get_solver` is a replacement for `JuMP`'s
-`with_solver` function. Instead of this:
-```julia
-MOD = Model(with_solver(Cbc.Optimizer))
+`with_solver` function. 
+
+Instead of this:
+```
+MOD = Model(with_solver(GLPK.Optimizer))
 ```
 we do this:
-```julia
-set_solver(Cbc)
+```
+set_solver(GLPK)
 MOD = Model(get_solver())
 ```
+
+
+## Solvers
+
+The default solver is [GLPK](https://github.com/jump-dev/GLPK.jl).
+
+The other supported solvers are:
+* [Cbc](https://github.com/jump-dev/Cbc.jl)
+* [CPLEX](https://github.com/jump-dev/CPLEX.jl)
+* [Gurobi](https://github.com/jump-dev/Gurobi.jl)
+* [HiGHS](https://github.com/jump-dev/HiGHS.jl)
 
 ## Selecting and using solver options
 
@@ -40,7 +52,15 @@ are currently set.
 When a `JuMP` model is created using `Model(get_solver())` the
 options are passed along.
 
-Note that each call to `set_solver` clears all options.
+Note that each call to `set_solver` clears all options and then resets 
+the output (verbose) level. 
+
+The function `set_solver` takes an optional second Boolean argument
+to set the output level:
+```
+set_solver(OPT_NAME::Module = GLPK, verbose::Bool = true)
+```
+
 
 ## Verbose output
 
@@ -54,7 +74,7 @@ At present, this function only knows how to do this for the `Cbc`, `CPLEX`, `GLP
 `Gurobi`, and `HiGHS` optimizers. It is easy, however, to add additional
 solvers by modifying the file `set_verbose.jl` or in the REPL with a command
 that looks like this:
-```julia
+```
 ChooseOptimizer._solver_table["NAME"] = ("opt_name", yes_val, no_val)
 ```
 where 

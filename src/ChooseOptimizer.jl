@@ -11,19 +11,26 @@ _SOLVER_OPTS = Dict{String,Any}()
 
 
 """
-    set_solver(OPT_NAME::Module = GLPK)
+    set_solver(OPT_NAME::Module = GLPK, verb::Bool = true)
 
 sets the optimization solver to be used.
-Note: This automatically invokes `clear_solver_options()`.
+
+This automatically invokes `clear_solver_options()` and 
+then sets the appropriate option for verbose output based
+on the value of the (optional) `verb` argument.
 """
-function set_solver(OPT_NAME::Module = GLPK)
+function set_solver(OPT_NAME::Module = GLPK, verb::Bool = true)
     clear_solver_options()
     global _SOLVER = OPT_NAME
+    set_solver_verbose(verb)
     # @info "Solver set to $_SOLVER"
     nothing
 end
 
 """
+    set_solver_options(kwd::String, val)
+    set_solver_options(d::Dict)
+
 `set_solver_options(kwd::Symbol, val)` set an option to be used
 by the solver.
 
@@ -33,6 +40,7 @@ function set_solver_options(kwd::String, val)
     global _SOLVER_OPTS[kwd] = val
 end
 
+
 function set_solver_options(d::Dict)
     for k in keys(d)
         set_solver_options(k, d[k])
@@ -41,7 +49,9 @@ function set_solver_options(d::Dict)
 end
 
 """
-`clear_solver_options()` clears all solver options.
+    clear_solver_options()
+
+clears all solver options.
 """
 function clear_solver_options()
     global _SOLVER_OPTS = Dict{String,Any}()
@@ -49,7 +59,9 @@ function clear_solver_options()
 end
 
 """
-`get_solver_options()` returns the dictionary of current solver options.
+    get_solver_options()::Dict
+
+returns the dictionary of current solver options.
 """
 function get_solver_options()::Dict
     global _SOLVER_OPTS
@@ -57,7 +69,9 @@ function get_solver_options()::Dict
 end
 
 """
-`get_solver()` generates the necessary arguments for creating a `JuMP`
+    get_solver()
+
+Generates the necessary arguments for creating a `JuMP`
 `Model`. That is, one just uses `Model(get_solver())`.
 """
 function get_solver()
@@ -68,13 +82,16 @@ function get_solver()
     return JuMP.optimizer_with_attributes(_SOLVER.Optimizer, d...)
 end
 
+"""
+    get_solver_name()
+
+Returns the solver module that is currently chosen.
+"""
 function get_solver_name()
     global _SOLVER
     return _SOLVER
 end
 
-
 include("set_verbose.jl")
-
 
 end

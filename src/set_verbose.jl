@@ -12,8 +12,9 @@ _solver_table["CPLEX"] = ("CPXPARAM_ScreenOutput", 1, 0)
 
 
 """
-`set_solver_verbose(verb = true)` sets how verbose the solver is
-during its work.
+    set_solver_verbose(verb::Bool = true)
+
+sets how verbose the solver is during its work.
 """
 function set_solver_verbose(verb::Bool = true)
 
