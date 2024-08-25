@@ -1,17 +1,18 @@
 module ChooseOptimizer
 
-using GLPK, JuMP
+using HiGHS
+using JuMP
 
 export set_solver, get_solver, get_solver_name
 export set_solver_options, clear_solver_options, get_solver_options
 export set_solver_verbose
 
-_SOLVER = GLPK
+_SOLVER = HiGHS
 _SOLVER_OPTS = Dict{String,Any}()
 
 
 """
-    set_solver(OPT_NAME::Module = GLPK, verb::Bool = true)
+    set_solver(OPT_NAME::Module = HiGHS, verb::Bool = false)
 
 sets the optimization solver to be used.
 
@@ -19,7 +20,7 @@ This automatically invokes `clear_solver_options()` and
 then sets the appropriate option for verbose output based
 on the value of the (optional) `verb` argument.
 """
-function set_solver(OPT_NAME::Module = GLPK, verb::Bool = true)
+function set_solver(OPT_NAME::Module = HiGHS, verb::Bool = false)
     clear_solver_options()
     global _SOLVER = OPT_NAME
     set_solver_verbose(verb)

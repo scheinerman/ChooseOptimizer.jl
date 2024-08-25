@@ -1,6 +1,6 @@
-using Test, ChooseOptimizer, GLPK
+using Test, ChooseOptimizer, HiGHS
 
-@test get_solver_name() == GLPK
+@test get_solver_name() == HiGHS
 set_solver_verbose(false)
 d = get_solver_options()
-@test d["msg_lev"] == 0
+@test d["output_flag"] == 0

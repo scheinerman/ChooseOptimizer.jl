@@ -31,4 +31,3 @@ function set_solver_verbose(verb::Bool = true)
     return verb
     # @info "Solver $_SOLVER verbose is set to $verb"
 end
-
