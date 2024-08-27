@@ -9,6 +9,9 @@ export set_solver_verbose
 
 _SOLVER = HiGHS
 _SOLVER_OPTS = Dict{String,Any}()
+function __init__()
+    set_solver_verbose(false)
+end
 
 
 """
