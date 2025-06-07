@@ -2,9 +2,7 @@
 
 
 This module is a tool to select different optimization engines when using `JuMP`
-and to change solver options.
-
-> **New in version 0.3**: Default solver is [HiGHS](https://github.com/jump-dev/HiGHS.jl) and `set_solver` defaults to non-verbose output. 
+and to simplify the process of changing solvers and setting options.
 
 
 ## Selecting and using a solver
@@ -17,16 +15,27 @@ desired. Without any arguments it selects the `HiGHS` optimizer. Otherwise,
 The function `get_solver` is a replacement for `JuMP`'s
 `with_solver` function. 
 
-Instead of this:
-```
+Instead of this in you code:
+```julia
 MOD = Model(with_solver(HiGHS.Optimizer))
 ```
-we do this:
-```
-set_solver(HiGHS)
+you only need this:
+```julia
 MOD = Model(get_solver())
 ```
 
+The advantage is that it is easy to change solvers. 
+```julia
+julia> using ChooseOptimizer
+
+julia> solve_my_problem();  # uses the HiGHS solver by default
+
+julia> using Cbc
+
+julia> set_solver(Cbc)
+
+julia> solve_my_problem();  # now uses the Cbc solver; no need to modify your code
+```
 
 ## Solvers
 
@@ -44,14 +53,10 @@ The supported solvers are:
 
 Solver options can be set up using these functions:
 
-* `set_solver_options(kwd, val)` adds the option whose name is
-given by the symbol `kwd` to be the value `val`. To add several
-options, use this several times.
-* `set_solver_options(d::Dict)` adds all the key/value entries
-in `d` as options by repeated calls to `set_solver_options(key,value)`.
+* `set_solver_options(kwd, val)` adds the option whose name is given by the symbol `kwd` to be the value `val`. To add several options, use this several times.
+* `set_solver_options(d::Dict)` adds all the key/value entries in `d` as options by repeated calls to `set_solver_options(key,value)`.
 * `clear_solver_options()` erases all solver options.
-* `get_solver_options()` returns a dictionary of the options that
-are currently set.
+* `get_solver_options()` returns a dictionary of the options that are currently set.
 
 When a `JuMP` model is created using `Model(get_solver())` the
 options are passed along.
@@ -61,7 +66,7 @@ the output (verbose) level.
 
 The function `set_solver` takes an optional second Boolean argument
 to set the output level:
-```
+```julia
 set_solver(OPT_NAME::Module = HiGHS, verbose::Bool = false)
 ```
 
@@ -78,7 +83,7 @@ At present, this function only knows how to do this for the `Cbc`, `CPLEX`, `GLP
 `Gurobi`, and `HiGHS` optimizers. It is easy, however, to add additional
 solvers by modifying the file `set_verbose.jl` or in the REPL with a command
 that looks like this:
-```
+```julia
 ChooseOptimizer._solver_table["NAME"] = ("opt_name", yes_val, no_val)
 ```
 where 

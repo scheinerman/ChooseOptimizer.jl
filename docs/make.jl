@@ -2,4 +2,4 @@
 # julia --color=yes --project make.jl
 
 using Documenter, ChooseOptimizer
-makedocs(; sitename = "ChooseOptimizer")
+makedocs(; sitename="ChooseOptimizer")
